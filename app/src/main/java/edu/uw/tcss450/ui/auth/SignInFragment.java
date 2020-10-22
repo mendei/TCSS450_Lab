@@ -1,25 +1,22 @@
-package edu.uw.tcss450.ui;
+package edu.uw.tcss450.ui.auth;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import edu.uw.tcss450.ui.SignInFragmentDirections;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
+import edu.uw.tcss450.ui.auth.SignInFragmentDirections;
 import edu.uw.tcss450.databinding.FragmentSignInBinding;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SignInFragment extends Fragment implements View.OnClickListener{
+public class SignInFragment extends Fragment implements View.OnClickListener {
 
     private FragmentSignInBinding binding;
     @Override
@@ -34,30 +31,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    public void processSignIn(String email) {
-        SignInFragmentDirections.ActionSignInFragmentToSuccessFragment directions =
-                SignInFragmentDirections.actionSignInFragmentToSuccessFragment(email);
-
-        Navigation.findNavController(getView()).navigate(directions);
-    }
-
-    public void processRegister() {
-        Navigation.findNavController(getView()).navigate(SignInFragmentDirections.actionSignInFragmentToRegisterFragment());
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        if (v == binding.signin) {
-            if (checkSignIn(binding.email.getText().toString(), binding.password.getText().toString())) {
-                processSignIn(binding.email.getText().toString());
-            }
-        }
-        if (v == binding.register) {
-            processRegister();
-        }
     }
 
     public boolean checkSignIn(String email, String password) {
@@ -78,12 +51,28 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
         return status;
     }
 
+    @Override
+    public void onClick(View v) {
+            if (checkSignIn(binding.email.getText().toString(), binding.password.getText().toString())) {
+                SignInFragmentDirections.ActionSignInFragmentToMainActivity directions =
+                        SignInFragmentDirections.actionSignInFragmentToMainActivity(binding.email.getText().toString(), "");
+
+                Navigation.findNavController(getView()).navigate(directions);
+                getActivity().finish();
+
+            }
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.signin.setOnClickListener(this);
-        binding.register.setOnClickListener(this);
+        binding.register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(getView()).navigate(SignInFragmentDirections.actionSignInFragmentToRegisterFragment());
+            }
+        });
     }
 
 

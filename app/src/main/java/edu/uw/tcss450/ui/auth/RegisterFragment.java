@@ -1,17 +1,16 @@
-package edu.uw.tcss450.ui;
+package edu.uw.tcss450.ui.auth;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import edu.uw.tcss450.R;
+import edu.uw.tcss450.ui.auth.RegisterFragmentDirections;
 import edu.uw.tcss450.databinding.FragmentRegisterBinding;
 
 /**
@@ -34,11 +33,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         binding = null;
     }
 
-    public void processRegister(String email) {
-        RegisterFragmentDirections.ActionRegisterFragmentToSuccessFragment directions =
-                RegisterFragmentDirections.actionRegisterFragmentToSuccessFragment(email);
+    public void processRegister(String email, String jwt) {
+        RegisterFragmentDirections.ActionRegisterFragmentToMainActivity directions =
+                RegisterFragmentDirections.actionRegisterFragmentToMainActivity(email, jwt);
 
         Navigation.findNavController(getView()).navigate(directions);
+        getActivity().finish();
     }
 
 
@@ -86,7 +86,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                     binding.email.getText().toString(),
                     binding.registerPassword.getText().toString(),
                     binding.retypePassword.getText().toString())) {
-                processRegister(binding.email.getText().toString());
+                processRegister(binding.email.getText().toString(), "");
             }
 
         }
