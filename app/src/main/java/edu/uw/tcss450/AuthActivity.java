@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-
+//Adding a comment onto your repository -Jared
 public class AuthActivity extends AppCompatActivity {
 
     @Override
