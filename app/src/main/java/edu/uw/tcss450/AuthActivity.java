@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 //Adding a comment onto your repository -Jared
+//Adding a comment onto here for gitpratice - Gyubeom
 public class AuthActivity extends AppCompatActivity {
     //Second comment to show jason
     @Override
